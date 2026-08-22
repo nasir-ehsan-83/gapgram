@@ -16,7 +16,7 @@ from src.modules.votes.repository import (
     get_vote
 )
 from src.modules.auth.schemas import TokenData
-from src.modules.posts.repository import get_post
+from src.modules.posts.repository import get_post_db
 from src.modules.votes.model import Vote
 from src.modules.votes.schemas import VoteCreate
 
@@ -29,7 +29,7 @@ async def create_new_vote(
     db: AsyncSession
 ) -> Vote | Response:
     # get the post from database
-    post = await get_post(vote_in.post_id, db)
+    post = await get_post_db(vote_in.post_id, current_user.id, db)
 
     # if post does not exist
     if not post:
@@ -83,11 +83,12 @@ async def create_new_vote(
 # get all votes of a post
 async def get_all_votes(
     post_id: int, 
+    current_user: TokenData,
     db: AsyncSession
 ) -> Sequence[Vote]:
 
     # get the post from database
-    post = await get_post(post_id, db)
+    post = await get_post_db(post_id, current_user.id, db)
 
     # if post does not exist
     if not post:

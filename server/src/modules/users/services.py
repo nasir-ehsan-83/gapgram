@@ -7,7 +7,7 @@ from src.common.errors import (
     NotFoundException,
     ErrorCode
 )
-from src.core.security import hash
+from src.core import hash_password
 from src.modules.users.model import User
 
 from src.modules.users.schemas import (
@@ -45,7 +45,7 @@ async def create_user(
         )
     
     user_data = user_in.model_dump()
-    user_data["password"] = await hash(user_data["password"])
+    user_data["password"] = await hash_password(user_data["password"])
 
     return await create_new_user(user_data, db)
 
@@ -147,7 +147,7 @@ async def update_user_by_email(
     
     # if there is a password element then hash it
     if "password" in data:
-        data["password"] = await hash(data["password"])
+        data["password"] = await hash_password(data["password"])
         
     
     return await update_user(data, user, db)

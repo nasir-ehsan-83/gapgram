@@ -12,9 +12,9 @@ from typing import (
     Optional,
     Sequence
 )
-from server.src.modules.auth.schemas import TokenData
-from src.db.database import get_db
-from src.common.dependencies.current_user import get_current_user
+from src.modules.auth.schemas import TokenData
+from src.db import get_db
+from src.common.dependencies import get_current_user
 from src.modules.posts.model import Post
 from src.modules.posts.schemas import (
     PostCreate, 

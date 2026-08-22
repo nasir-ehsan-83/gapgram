@@ -9,9 +9,9 @@ from fastapi import (
     Body, 
     Path
 )
-from server.src.modules.auth.schemas import TokenData
-from src.common.dependencies.current_user import get_current_user
-from src.db.database import get_db
+from src.modules.auth.schemas import TokenData
+from src.common.dependencies import get_current_user
+from src.db import get_db
 from src.modules.votes.model import Vote
 from src.modules.votes.schemas import (
     VoteCreate, 
@@ -58,4 +58,4 @@ async def get_votes(
     db: AsyncSession = Depends(get_db)
 ) -> Sequence[Vote]:
 
-    return await get_all_votes(post_id, db)
+    return await get_all_votes(post_id, current_user, db)

@@ -4,7 +4,7 @@ from typing import (
     Optional,
     Sequence
 )
-from server.src.modules.auth.schemas import TokenData
+from src.modules.auth.schemas import TokenData
 from src.modules.posts.repository import (
     create_post_db,
     delete_post_db,
